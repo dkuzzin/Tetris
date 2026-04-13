@@ -30,6 +30,7 @@ public class GameModel {
     public int getSpeed(){return speed;}
     public int getLevel(){return (level+1);}
     public Tetromino getCurrTetromino() {return currTetromino;}
+    public Tetromino getNextTetromino() {return nextTetromino;}
     public Board getBoard() {return board;}
     public GameState getState() {return state;}
     public void setState(GameState newState) {this.state = newState;}

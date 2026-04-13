@@ -64,6 +64,7 @@ public class GamePanel extends SpaceBackgroundPanel {
         drawGrid(g);
         drawLocked(g);
         drawCurrentTetromino(g);
+        drawNextTetromino(g);
     }
 
     private void drawUI(Graphics g){
@@ -88,6 +89,27 @@ public class GamePanel extends SpaceBackgroundPanel {
 
         y += 30;
         g.drawString(String.valueOf(gameModel.getLevel()), offsetX + 20, y);
+        y += 60;
+        g.drawString("Следующая:", offsetX + 20, y);
+    }
+    private void drawNextTetromino(Graphics g){
+        Tetromino tetromino = gameModel.getNextTetromino();
+        if (tetromino == null){
+            return;
+        }
+
+        int offsetX = gameModel.getBoard().getSizeX() * CELL_SIZE;
+
+        int startPixelX = offsetX + 20;
+        int startPixelY = 250;
+
+        Coordinate[] cells = tetromino.getLocalCells();
+        for (Coordinate cell : cells){
+            int pixelX = startPixelX + (cell.x() * CELL_SIZE);
+            int pixelY = startPixelY + (cell.y() * CELL_SIZE);
+
+            drawBlockAbsolute(g, pixelX, pixelY);
+        }
     }
 
     private void drawCurrentTetromino(Graphics g){
@@ -113,12 +135,25 @@ public class GamePanel extends SpaceBackgroundPanel {
                 int pixelY = y * CELL_SIZE;
 
                 g.setColor(EMPTY_CELL_COLOR);
-                //g.fillRect(pixelX, pixelY, CELL_SIZE, CELL_SIZE);
 
                 g.setColor(GRID_COLOR);
                 g.drawRect(pixelX, pixelY, CELL_SIZE, CELL_SIZE);
             }
         }
+    }
+    private void drawBlockAbsolute(Graphics g, int pixelX, int pixelY) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(pixelX, pixelY, CELL_SIZE, CELL_SIZE);
+
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(2));
+        g2d.drawRect(pixelX + 1, pixelY + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(pixelX, pixelY, CELL_SIZE, CELL_SIZE);
     }
 
 
