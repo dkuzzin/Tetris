@@ -55,6 +55,10 @@ public class EnterNamePanel extends SpaceBackgroundPanel{
             );
             return;
         }
+        if (name.length() > 15){
+            name = name.substring(0, 15);
+        }
+
         if (HighScores.isNameAlreadyExist(name)){
             JOptionPane.showMessageDialog(
                     this,
@@ -64,9 +68,7 @@ public class EnterNamePanel extends SpaceBackgroundPanel{
             );
             return;
         }
-        if (name.length() > 15){
-            name = name.substring(0, 15);
-        }
+
         HighScores recordTable = controller.getRecordTable();
         if (recordTable == null){
             JOptionPane.showMessageDialog(
